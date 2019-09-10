@@ -5,17 +5,17 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  id: 0,
+  lastId: 0,
   cart: JSON.parse(localStorage.getItem('cart')) || [],
 }
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case CART_ADD:
-      let nextId = state.id + 1;
+      let nextId = state.lastId + 1;
       return {
         ...state,
-        id: nextId,
+        lastId: nextId,
         cart: [
           ...state.cart,
           {
