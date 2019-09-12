@@ -34,7 +34,7 @@ class TLD extends Component {
     var tld = '.' + this.props.domain.split('.').splice(1).join('.');
     return (
       <React.Fragment>
-      <div className={ this.inCart() ? 'tld-added' : '' } onClick={this.toogleProduct.bind(this, this.props.domain)}>{ tld }</div>
+        <div className={ this.inCart() ? 'tld-added' : '' } onClick={this.toogleProduct.bind(this, this.props.domain)}>{ tld }</div>
       </React.Fragment>
     );
   }

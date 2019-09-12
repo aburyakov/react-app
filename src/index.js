@@ -8,6 +8,7 @@ import {Provider} from 'react-redux'
 import {createStore, compose, applyMiddleware} from 'redux'
 import rootReducer from './store/reducers/rootReducer'
 import thunk from 'redux-thunk'
+import loggerMiddleware from './middlewares/loggerMiddleware';
 
 const composeEnhancers =
   typeof window === 'object' &&
@@ -19,7 +20,7 @@ const composeEnhancers =
 const store = createStore(
   rootReducer,
   composeEnhancers(
-    applyMiddleware(thunk)
+    applyMiddleware(thunk, loggerMiddleware)
   )
 )
 
