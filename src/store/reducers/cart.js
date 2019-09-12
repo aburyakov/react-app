@@ -9,37 +9,43 @@ const initialState = {
   cart: JSON.parse(localStorage.getItem('cart')) || [],
 }
 
-export default function cartReducer(state = initialState, action) {
-  switch (action.type) {
-    case CART_ADD:
-      let nextId = state.lastId + 1;
-      return {
-        ...state,
-        lastId: nextId,
-        cart: [
-          ...state.cart,
-          {
-            id: nextId,
-            code: action.product
-          }
-        ]
-      }
-    case CART_REMOVE:
-      return {
-        ...state, 
-        cart : state.cart.filter((product) => {
-          if(product.id !== action.productId) {
-            return product;
-          }
-          return false;
-        })
-      }
-      case CART_SAVE:
-        localStorage.setItem('cart', JSON.stringify(state.cart));
-        return {
-          ...state,
+const actions = {
+  [CART_ADD](state, action) {
+    let nextId = state.lastId + 1;
+    return {
+      ...state,
+      lastId: nextId,
+      cart: [
+        ...state.cart,
+        {
+          id: nextId,
+          code: action.product
         }
-    default:
-      return state
+      ]
+    }
+  },
+  [CART_REMOVE](state, action) {
+    return {
+      ...state, 
+      cart : state.cart.filter((product) => {
+        if(product.id !== action.productId) {
+          return product;
+        }
+        return false;
+      })
+    }
+  },
+  [CART_SAVE](state, action) {
+    localStorage.setItem('cart', JSON.stringify(state.cart));
+    return {
+      ...state,
+    }
   }
+}
+
+export default function cartReducer(state = initialState, action) {
+  if(typeof actions[action.type] === 'function') {
+    return actions[action.type].call(this, state, action);
+  }
+  return state;
 }
